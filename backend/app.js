@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 app.post('/api/auth/login', (req, res ) => {
     console.log('requete Post login reçue')
     const authorizedUser = { userId:'oualalal',token: 'yoloooo' }
-    
+
     res.status(200).json(authorizedUser);  
 });
 
@@ -48,7 +48,7 @@ app.get('/api/sauces', (req, res ) => {
     
 });
 
-
+  
 app.post('/api/sauces', (req, res ) => {  
     console.log('abc')  
     console.log(req.body)  
