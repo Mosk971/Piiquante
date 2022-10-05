@@ -1,23 +1,18 @@
 const express = require('express');
-
 const mongoose = require('mongoose');
 
-const Sauce = require('./models/Sauce');
+const userRoutes = require('./routes/user')
+// const saucesRoute = require('./routes/sauces');
 
-const app = express();
 
 
 mongoose.connect('mongodb+srv://Piiquante:jaimelasaucepiquante@clusterpiiquante.lmsyt8e.mongodb.net/?retryWrites=true&w=majority',
     { useNewUrlParser: true,
-        useUnifiedTopology: true })
+      useUnifiedTopology: true })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-
-
-app.use(express.json()); 
-
-
+const app = express();
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -26,40 +21,12 @@ app.use((req, res, next) => {
     next();
 });
 
-//login
 
-app.post('/api/auth/login', (req, res ) => {
-    console.log('requete Post login reçue')
-    const authorizedUser = { userId:'oualalal',token: 'yoloooo' }
+app.use(express.json()); 
 
-    res.status(200).json(authorizedUser);  
-});
+app.use('/api/auth', userRoutes);
+// app.use('/api/sauces',saucesRoute);
 
-
-// Post signup
-    
-
-
-// get sauce
-app.get('/api/sauces', (req, res ) => {
-    Sauce.find()
-    .then(sauce => res.status(200).json(sauce))
-    .catch(error => res.status(400).json({ error }));
-    
-});
-
-  
-app.post('/api/sauces', (req, res ) => {  
-    console.log('abc')  
-    console.log(req.body)  
-    const sauce = new Sauce({
-      ...req.body       
-    });
-    sauce.save()
-    .then(() => res.status(201).json({message: 'Sauce enregistrée !'}))
-    .catch(error => res.status(400).json({ error }));
-    
-});
 
 
 module.exports = app
