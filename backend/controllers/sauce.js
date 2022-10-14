@@ -135,11 +135,11 @@ exports.likeOrDislike = (req, res, next) => {
                 
                     {_id: sauceId}, 
                     {
-                        $inc : {dislikes : 1},
+                        $inc : {dislikes : '1'},
                         $push : {usersDisliked : userId}
                     })
                     .then(() => {
-                        res.status(200).json({message : 1})
+                        res.status(200).json({message : "dislike ajouté"})
                     })
                     .catch(error => {
                         res.status(401).json({ error })
@@ -154,7 +154,7 @@ exports.likeOrDislike = (req, res, next) => {
                 
                         {_id: sauceId}, 
                         {
-                            $inc : {likes : -1},
+                            $inc : {likes : '-1'},
                             $pull : {usersLiked : userId}
                         },
                         {new: true}
@@ -177,7 +177,7 @@ exports.likeOrDislike = (req, res, next) => {
                 
                         {_id: sauceId}, 
                         {
-                            $inc : {dislikes : -1},
+                            $inc : {dislikes : '-1'},
                             $pull : {usersDisliked : userId}
                         })
                         .then(() => {
