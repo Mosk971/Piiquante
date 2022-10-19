@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
-
-//hash token
+const dotenv = require('dotenv').config()
+//hash token avec jswbtoken 
 module.exports = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken  = jwt.verify(token, 'RANDOM_SECRETDEV_TOKEN');
+        const decodedToken  = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         const userId = decodedToken.userId;
         req.auth = {
             userId: userId
